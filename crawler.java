@@ -32,9 +32,6 @@ public class crawler implements SimpleCrawlerInterface {
 		ConcurrentSkipListMap<Integer, String> friends = readlist.ReadPendingNodeList();
 		ConcurrentSkipListMap<Integer, String> donenodes = readlist.ReadProcessedNodeList();
 
-		//check if the value in to be processed node is already processed
-		//if yes, then remove it from the friends list
-
 		Iterator iter = friends.entrySet().iterator();
 		while(iter.hasNext()) {
 			ConcurrentSkipListMap.Entry entry = (ConcurrentSkipListMap.Entry)iter.next();
@@ -68,7 +65,7 @@ public class crawler implements SimpleCrawlerInterface {
 			while(it.hasNext() && usercounter < 5020) {
 				ConcurrentSkipListMap.Entry entry = (ConcurrentSkipListMap.Entry)it.next();
 				String username2 = (String)entry.getValue();
-				//get the max page number of friends
+				
 				double numberFriendsPerPage = 30.0;
 				int numPages = (int) Math.ceil(getNoFriends(username2)/numberFriendsPerPage);
 				if (numPages == 0){
@@ -80,18 +77,12 @@ public class crawler implements SimpleCrawlerInterface {
 					previous = page.indexOf("PeopleResults");
 					end = previous;
 
-					//get the friends in pages same as earlier
-					while(page.indexOf("rel=\"contact\"><img",previous) != -1 && usercounter < 5020){
+										while(page.indexOf("rel=\"contact\"><img",previous) != -1 && usercounter < 5020){
 						avatarPos = page.indexOf("img src=",previous);
 						begin = page.indexOf("#", avatarPos);
 						end = page.indexOf("\" alt=\"", begin);
 						String friend = page.substring(begin+1, end);
-						//System.out.print("username :" + username2);
-						//System.out.println(" -> "+ friend);
-
-
-						//adding username -> friends to an array
-						int ind = edge.size();
+												int ind = edge.size();
 						if(ind >=2 && !edge.get(ind - 2).equals(username2)){
 							usercounter++;
 							System.out.println("usercounter value :"+ usercounter);
@@ -136,12 +127,7 @@ public class crawler implements SimpleCrawlerInterface {
 	}
 
 
-	/*
-	 * This method clears the ArrayList edge after writing it
-	 * in the file.
-	 *
-	 */
-	public static ArrayList<String> clearArrayList(ArrayList<String> edge){
+		public static ArrayList<String> clearArrayList(ArrayList<String> edge){
 		ArrayList<String> temp = new ArrayList<String>();
 		int index = edge.size();
 		if(index >=4){
@@ -155,12 +141,6 @@ public class crawler implements SimpleCrawlerInterface {
 
 	}
 
-
-
-	/*
-	 * Write Node List
-	 *
-	 */
 	@SuppressWarnings({ "unchecked" })
 	public static void writeNodeList(ConcurrentSkipListMap friendslist, ConcurrentSkipListMap donenodes) {
 		File aFile = new File("D:\\FlickrNodeList.csv");
@@ -213,19 +193,13 @@ public class crawler implements SimpleCrawlerInterface {
 
 	}
 
-
-	/*
-	 * write edge list
-	 *
-	 */
-
 	public static void writeEdgeList(File aFile, ArrayList<String> edge) {
 		String commaSeparatedValues = "";
 		Iterator<String> iter = edge.iterator();
 		while (iter.hasNext()) {
 			commaSeparatedValues = commaSeparatedValues + iter.next() + "," +iter.next() + "\n";
 		}
-		/**Remove the last comma**/
+		
 		if (commaSeparatedValues.endsWith(",")) {
 			commaSeparatedValues = commaSeparatedValues.substring(0,
 					commaSeparatedValues.lastIndexOf(","));
@@ -261,8 +235,7 @@ public class crawler implements SimpleCrawlerInterface {
 		String line;
 		StringBuffer buf = new StringBuffer();
 		URL theURL = null;
-		//check if the URL starts with http://
-		if(!URL.toLowerCase().startsWith("http://"))
+				if(!URL.toLowerCase().startsWith("http://"))
 			URL = "http://"+URL;
 		try
 		{
@@ -279,12 +252,9 @@ public class crawler implements SimpleCrawlerInterface {
 				conn.setDoOutput(true);
 				OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
-				//write parameters
-				writer.write(PostData);
-				writer.flush();
-
-				//get the response
-				data = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	writer.write(PostData);
+	writer.flush();
+	data = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				while ((line = data.readLine()) != null) {
 					buf.append(line);
 				}
@@ -329,8 +299,6 @@ public class crawler implements SimpleCrawlerInterface {
 		}
 		return noFriends;
 	}
-
-	//this is giving the page where all the friend list is present
 	public String readFriendsPage(String username){
 		String wholepage = "";
 

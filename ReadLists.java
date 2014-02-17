@@ -13,10 +13,6 @@ public class ReadLists{
 	public ReadLists(){
 	}
 
-	/*
-	 * Reading the Processed List
-	 *
-	 */
 	public ConcurrentSkipListMap<Integer, String> ReadProcessedNodeList() {
 		String csvFile = "D:\\FlickrProcessedNodeList.csv";
 		BufferedReader br = null;
@@ -52,11 +48,6 @@ public class ReadLists{
 		}
 		return procnodes;
 	}
-
-	/*
-	 * Reading Unprocessed Node List
-	 *
-	 */
 	
 	public ConcurrentSkipListMap<Integer, String> ReadPendingNodeList() {
 		String csvFile = "D:\\FlickrNodeList.csv";
@@ -67,7 +58,6 @@ public class ReadLists{
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile), Charset.forName("UTF-8")));
 			while ((line = br.readLine()) != null) {
-				// use comma as separator
 				String[] nodes = line.split(cvsSplitBy);
 				pendingnodes.put(Integer.parseInt(nodes[0]), nodes[1]);
 			}

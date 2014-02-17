@@ -26,11 +26,6 @@ public class CreateFlickrAnonymizedEdgeList {
 
 	}
 
-
-	/*
-	 * Read the NodeList file and put the values in a Map
-	 *
-	 */
 	public ConcurrentSkipListMap<Integer, String> ReadNodeList() {
 		String csvFile = "D:\\FlickrNodeList.csv";
 		BufferedReader br = null;
@@ -45,9 +40,8 @@ public class CreateFlickrAnonymizedEdgeList {
 				String[] sNode = line.split(cvsSplitBy);
 				nodes.put(Integer.parseInt(sNode[0]), sNode[1]);
 			}
-			//loop map
-
-//          for (Entry<Integer, String> entry : nodes.entrySet()) {
+			
+{
 //               System.out.println("[Key= " + entry.getKey() + " , User="
 //               + entry.getValue() + "]");
 //                                            }
@@ -66,11 +60,6 @@ public class CreateFlickrAnonymizedEdgeList {
 		}
 		return nodes;
 	}
-
-	/*
-	 * Read the EdgeList file and put values in a ArrayList
-	 *
-	 */
 
 	public ArrayList<String> ReadEdgeList() {
 		String csvFile = "D:\\FlickrEdgeList.csv";
@@ -140,12 +129,6 @@ public class CreateFlickrAnonymizedEdgeList {
 		//                   System.out.println("anonymized value is :" + anonymized.get(i));
 		//   }
 
-
-		/*
-		 * Write the anonymized to file D:\\FlickrAnonymizedEdgeList.csv
-		 *
-		 */
-
 		String commaSeparatedValues = "";
 		Iterator<Integer> iter = anonymized.iterator();
 		while (iter.hasNext()) {
@@ -155,8 +138,7 @@ public class CreateFlickrAnonymizedEdgeList {
 		System.out.println("Values are in commaSeparatedValues list now.");
 
 
-		/**Remove the last comma**/
-		if (commaSeparatedValues.endsWith(",")) {
+				if (commaSeparatedValues.endsWith(",")) {
 			commaSeparatedValues = commaSeparatedValues.substring(0,
 					commaSeparatedValues.lastIndexOf(","));
 		}
